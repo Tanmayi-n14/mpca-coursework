@@ -16,7 +16,7 @@ MPCA Coursework
 ├── Level 2: Orange Project (RISC-V Signal Stability & Spike Analysis)
 │   └── RISC-V RV32I Assembly (RARS Simulator & Performance Traces)
 └── Level 3: Jackfruit Final Project (Smart Hardware Automation on Arduino Uno)
-    └── (Dedicated Repository: smart-washroom-arduino-system)
+    └── (Dedicated Repository: smart-washroom-system-mpca)
 ```
 
 ---
@@ -64,7 +64,7 @@ MPCA Coursework
 ---
 
 ### 🍈 Level 3: Jackfruit Final Project (Smart Hardware Automation)
-* 🔗 **Dedicated Repository**: [**`Tanmayi-n14/smart-washroom-arduino-system`**](https://github.com/Tanmayi-n14/smart-washroom-arduino-system)
+* 🔗 **Dedicated Repository**: [**`Tanmayi-n14/smart-washroom-system-mpca`**](https://github.com/Tanmayi-n14/smart-washroom-system-mpca)
 * Embedded automation & safety system running on Arduino Uno: Ultrasonic occupancy detection, touchless IR tap, MQ gas leakage alarm, resistive water flood sensing, and I2C LCD priority display.
 
 ---
