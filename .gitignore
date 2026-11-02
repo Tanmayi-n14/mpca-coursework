@@ -1,0 +1,25 @@
+# Keil uVision and simulator artifacts
+*.bak
+*.dep
+*.uvgui*
+*.uvopt*
+*.uvproj*
+*.o
+*.obj
+*.axf
+*.crf
+*.d
+*.lnp
+*.sct
+*.build_log.htm
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors & IDEs
+.vscode/
+.idea/
+*.swp
+*~

@@ -1,0 +1,12 @@
+1) Write a program in ARM7TDMI-ISA to transfer a block of 16 words stored at memory location X to memory location Y using Load Multiple and Store Multiple instructions. The rate of transfer is 24 bytes.
+
+2)Write a program to perform 3X3 matrix addition.
+
+3) Write a program to find the length of a string.
+
+4) Write a program to copy a string from one location to another location.
+
+5) Write an ALP to find how many times the given character is present in a string.
+
+
+

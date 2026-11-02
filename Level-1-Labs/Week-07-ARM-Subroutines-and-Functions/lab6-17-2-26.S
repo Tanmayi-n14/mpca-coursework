@@ -1,0 +1,292 @@
+;0X201 SOFTWARE INTERRUPT NEEDED FOR PLUGINS
+;LED Light Up
+
+
+MOV R0, #1
+SWI 0x201
+BL DELAY
+
+MOV R0, #2
+SWI 0x201
+BL DELAY
+
+MOV R0, #3
+SWI 0x201
+SWI 0x11
+
+DELAY:
+LDR R6, =a
+LDR R7, [R6]
+LOOP: 
+SUB R7, R7, #1
+CMP R7, #0
+BNE LOOP
+MOV PC, LR
+
+a: .word 1000000
+
+
+
+
+
+
+;Seven Segment Display UP COUNTER
+
+a: .word 1000000
+
+.EQU A, 0X80
+.EQU B, 0X40
+.EQU C, 0X20
+.EQU P, 0X10
+.EQU D, 0X08
+.EQU E, 0X04
+.EQU F, 0X02
+.EQU G, 0X01
+
+
+TAB: 
+.WORD A|B|C|D|E|G     ;0
+.WORD B|C             ;1
+.WORD A|B|F|E|D       ;2
+.WORD A|B|F|C|D       ;3
+.WORD G|F|C|B         ;4
+.WORD A|G|F|C|D       ;5
+.WORD A|G|E|D|C|F     ;6
+.WORD A|B|C           ;7
+.WORD A|B|C|D|E|F|G   ;8
+.WORD A|B|G|F|C       ;9
+.WORD A|G|E|C|B|F     ;A
+.WORD A|B|C|D|E|F|G|P ;B
+.WORD A|G|E|D         ;C
+.WORD A|C|D|E|G|P|B   ;D
+.WORD A|G|F|E|D       ;E
+.WORD A|G|F|E         ;F
+
+LDR R5, =TAB
+MOV R2, #16
+UPCOUNT:
+LDR R0, [R5], #4
+SWI 0X200
+BL DELAY
+SUB R2, R2, #1
+CMP R2, #0
+BEQ EXIT
+B UPCOUNT
+
+DELAY:
+LDR R6, =a
+LDR R7, [R6]
+
+LOOP: 
+SUB R7, R7, #1
+CMP R7, #0
+BNE LOOP
+MOV PC, LR
+
+EXIT:
+SWI 0X11
+
+
+
+;Seven Segment Display DOWN COUNTER
+
+
+a: .word 1000000
+
+.EQU A, 0X80
+.EQU B, 0X40
+.EQU C, 0X20
+.EQU P, 0X10
+.EQU D, 0X08
+.EQU E, 0X04
+.EQU F, 0X02
+.EQU G, 0X01
+
+
+TAB: 
+.WORD A|B|C|D|E|G     ;0
+.WORD B|C             ;1
+.WORD A|B|F|E|D       ;2
+.WORD A|B|F|C|D       ;3
+.WORD G|F|C|B         ;4
+.WORD A|G|F|C|D       ;5
+.WORD A|G|E|D|C|F     ;6
+.WORD A|B|C           ;7
+.WORD A|B|C|D|E|F|G   ;8
+.WORD A|B|G|F|C       ;9
+.WORD A|G|E|C|B|F     ;A
+.WORD A|B|C|D|E|F|G|P ;B
+.WORD A|G|E|D         ;C
+.WORD A|C|D|E|G|P|B   ;D
+.WORD A|G|F|E|D       ;E
+.WORD A|G|F|E         ;F
+
+LDR R5, =TAB
+ADD R5, R5, #60
+MOV R2, #16
+
+DOWNCOUNT:
+LDR R0, [R5], #-4
+SWI 0X200
+BL DELAY
+SUB R2, R2, #1
+CMP R2, #0
+BEQ EXIT
+B DOWNCOUNT
+
+DELAY:
+LDR R6, =a
+LDR R7, [R6]
+
+LOOP: 
+SUB R7, R7, #1
+CMP R7, #0
+BNE LOOP
+MOV PC, LR
+
+EXIT:
+SWI 0X11
+
+
+
+
+;Seven Segment Display UP AND DOWN COUNTER
+
+a: .word 1000000
+
+.EQU A, 0X80
+.EQU B, 0X40
+.EQU C, 0X20
+.EQU P, 0X10
+.EQU D, 0X08
+.EQU E, 0X04
+.EQU F, 0X02
+.EQU G, 0X01
+
+TAB: 
+.WORD A|B|C|D|E|G
+.WORD B|C
+.WORD A|B|F|E|D
+.WORD A|B|F|C|D
+.WORD G|F|C|B
+.WORD A|G|F|C|D
+.WORD A|G|E|D|C|F
+.WORD A|B|C
+.WORD A|B|C|D|E|F|G
+.WORD A|B|G|F|C
+.WORD A|G|E|C|B|F
+.WORD A|B|C|D|E|F|G|P
+.WORD A|G|E|D
+.WORD A|C|D|E|G|P|B
+.WORD A|G|F|E|D
+.WORD A|G|F|E
+
+
+LDR R5, =TAB
+MOV R2, #16
+UPCOUNT:
+LDR R0, [R5], #4
+SWI 0X200
+BL DELAY
+SUBS R2, R2, #1
+BNE UPCOUNT
+
+LDR R5, =TAB
+ADD R5, R5, #56
+MOV R2, #15
+DOWNCOUNT:
+LDR R0, [R5], #-4
+SWI 0X200
+BL DELAY
+SUBS R2, R2, #1
+BNE DOWNCOUNT
+
+SWI 0X11
+
+DELAY:
+LDR R6, =a
+LDR R7, [R6]
+LOOP: 
+SUBS R7, R7, #1
+BNE LOOP
+MOV PC, LR
+
+
+
+
+
+
+
+Move a string from Right to Left on LCD (40 columns by 15 rows)
+
+
+;MAM'S CODE
+
+.TEXT
+MOV R0 , #30  ; R0 = X
+MOV R1 , #7    ; R1 = Y
+MOV R7 , #0
+LDR R8 , =NUM
+LDR R8 , [R8]
+LDR R2 , =STR
+
+LOOP: 
+SWI 0X204 
+BL SUM
+CMP R0 , #0
+SUBNE R0 , R0 , #1
+SWIEQ 0X11
+B LOOP
+
+SUM: 
+CMP R7 , R8 
+ADDNE R7 , R7 , #1
+BNE SUM
+SWI 0X206  
+MOV R7 , #0
+MOV PC , LR
+
+.DATA  
+STR:   .ASCIZ  "HELLO WORLD" 
+NUM:  .WORD  15000
+
+
+
+
+
+;CODE THAT WORKS
+
+.TEXT
+MOV R0, #5       
+MOV R1, #5    
+LDR R2, =STR    
+
+LOOP:
+    SWI 0x206   
+    SWI 0x204    
+    BL DELAY
+    
+    CMP R0, #0
+    BEQ EXIT    
+    SUB R0, R0, #1
+    B LOOP
+
+DELAY:
+    LDR R3, =1000000
+D_LOOP:
+    SUBS R3, R3, #1
+    BNE D_LOOP
+    MOV PC, LR
+
+EXIT:
+    SWI 0x11
+
+.DATA
+.ALIGN
+STR: .ASCIZ "HELLO WORLD"
+
+
+
+
+
+

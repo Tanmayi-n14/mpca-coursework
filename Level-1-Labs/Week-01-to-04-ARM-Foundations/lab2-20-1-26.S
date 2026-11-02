@@ -1,0 +1,102 @@
+
+/*
+;1. FACTORIAL OF A NUMBER 5
+
+MOV R0, #5
+MOV R1, #1
+FACT:
+MUL R1, R0, R1
+SUB R0, R0, #1
+CMP R0, #1
+BNE FACT
+SWI 0X11
+
+
+
+;2. GCD OF 2 NUMBERS 24 AND 18
+
+MOV R0, #24
+MOV R1, #18
+GCD:
+CMP R0, R1
+SUBGT R0, R0, R1
+SUBLT R1, R1, R0
+BNE GCD
+MOV R5, R1
+SWI 0X11
+
+;ALSO CAN BE DONE BY (MY ANS)
+
+MOV R0, #24
+MOV R1, #18
+LOOP:
+CMP R0, R1
+BEQ STOP
+BGT R0_BIGGER
+;R1_BIGGER:
+SUB R1, R1, R0
+B LOOP
+R0_BIGGER:
+SUB R0, R0, R1
+B LOOP
+STOP:
+MOV R5, R1
+SWI 0X11
+
+
+;3. MATRIX ADDITION
+
+.text
+_start:
+
+LDR R0, =A
+LDR R1, =B
+LDR R2, =C
+MOV R3, #4
+
+LOOP:
+LDR R4, [R0], #4
+LDR R5, [R1], #4
+ADD R6, R4, R5
+STR R6, [R2], #4
+SUBS R3, R3, #1
+BNE LOOP
+
+MOV R7, #1
+SWI 0X11
+
+.data
+
+A: .WORD 1, 2, 3, 4
+B: .WORD 5, 6, 7, 8
+C: .WORD 0, 0, 0, 0
+
+
+*/
+
+;4. Count the number of positive, negative numbers and zeros in a given array
+
+
+LDR R0, =ARRAY
+MOV R1, #10
+MOV R5, #0
+MOV R6, #0
+MOV R7, #0
+
+LOOP:
+LDR R2, [R0], #4
+CMP R2, #0
+ADDGT R5, R5, #1
+ADDLT R6, R6, #1
+ADDEQ R7, R7, #1
+SUBS R1, R1, #1
+BNE LOOP
+
+SWI 0X11
+
+ARRAY: .WORD 10, -5, 0, 20, -15, 0, 30, -25, 40, 0
+
+
+
+
+
